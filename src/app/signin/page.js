@@ -1,7 +1,7 @@
 "use client"
 
 import SignIn from '@/components/SignIn';
-import SocialSignIn from '@/components/SocialSignIn';
+// import SocialSignIn from '@/components/SocialSignIn';
 
 export default function SignInPage() {
     return (

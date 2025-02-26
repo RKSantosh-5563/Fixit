@@ -29,12 +29,12 @@ const DashboardCustomer = async () => {
     const bookings = await getBookingsByEmail(user.email, null);
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-gray-200 py-12 px-4 sm:px-6">
+        <div className="min-h-screen bg-gray-800 text-gray-200 py-12 px-4 sm:px-6">
             <div className="max-w-5xl mx-auto">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
                     <h1 className="text-3xl font-bold text-white mb-4 md:mb-0">Customer Dashboard</h1>
-                    <div className="bg-indigo-600 px-4 py-2 rounded-lg text-white">
-                        <span>Welcome back, {user.username}!</span>
+                    <div className="bg-gray-700 px-4 py-2 rounded-lg text-white">
+                        <span>Welcome back, {user.username}</span>
                     </div>
                 </div>
 
@@ -42,7 +42,7 @@ const DashboardCustomer = async () => {
                     {/* Profile Section */}
                     <div className="col-span-1">
                         <div className="bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700">
-                            <div className="bg-gradient-to-r from-indigo-800 to-purple-700 px-6 py-4">
+                            <div className=" bg-gray-700 px-6 py-4">
                                 <h2 className="text-xl font-semibold text-white flex items-center gap-2">
                                     <UserIcon className="w-5 h-5" />
                                     Profile
@@ -81,8 +81,8 @@ const DashboardCustomer = async () => {
                                     </li>
                                 </ul>
                                 
-                                <button className="w-full py-2 mt-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors">
-                                    Edit Profile
+                                <button className="w-full py-2 mt-4 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors">
+                                    Update Profile
                                 </button>
                             </div>
                         </div>
@@ -91,25 +91,26 @@ const DashboardCustomer = async () => {
                     {/* Bookings Section */}
                     <div className="col-span-1 md:col-span-2">
                         <div className="bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700 h-full">
-                            <div className="bg-gradient-to-r from-indigo-800 to-purple-700 px-6 py-4 flex justify-between items-center">
+                            <div className="bg-gray-700 px-6 py-4 flex justify-between items-center">
                                 <h2 className="text-xl font-semibold text-white flex items-center gap-2">
                                     <CalendarIcon className="w-5 h-5" />
                                     Your Bookings
                                 </h2>
-                                <button className="bg-white text-indigo-800 px-3 py-1 rounded-md text-sm font-medium hover:bg-gray-100 transition-colors">
-                                    New Booking
-                                </button>
+                                <div className="bg-gray-500 text-slate-100 px-3 py-1 rounded-md text-sm font-medium">
+                                    {bookings.length} Bookings
+                                </div> 
                             </div>
                             
-                            <div className="p-6">
+                            {/* Scrollable Booking List */}
+                            <div className="p-6 max-h-[490px] overflow-y-auto custom-scrollbar">
                                 {bookings.length > 0 ? (
                                     <div className="space-y-4">
                                         {bookings.map((booking, index) => (
-                                            <div key={index} className="bg-gray-700 hover:bg-gray-650 border-l-4 border-indigo-500 rounded-lg shadow-md transition-all duration-200 overflow-hidden">
+                                            <div key={index} className="bg-gray-700 hover:bg-gray-650 border-l-4 border-gray-500 rounded-lg shadow-md transition-all duration-200 overflow-hidden">
                                                 <div className="p-5">
                                                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                                                        <h3 className="text-lg font-medium text-white">{booking.service}</h3>
-                                                        <span className="px-3 py-1 bg-indigo-600 text-white text-sm rounded-full">
+                                                        <h3 className="text-lg font-medium text-gray-300">{booking.service}</h3>
+                                                        <span className="px-3 py-1 bg-gray-500 text-white text-sm rounded-full">
                                                             {new Date(booking.date).toLocaleDateString()}
                                                         </span>
                                                     </div>
@@ -132,10 +133,7 @@ const DashboardCustomer = async () => {
                                             <CalendarIcon className="w-10 h-10 text-gray-500" />
                                         </div>
                                         <h3 className="text-xl font-medium text-gray-300 mb-2">No Bookings Yet</h3>
-                                        <p className="text-gray-500 mb-6 max-w-md">You haven't made any bookings yet. When you do, they'll appear here.</p>
-                                        <button className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
-                                            Book a Service
-                                        </button>
+                                        <p className="text-gray-500 mb-6 max-w-md">You haven't made any bookings yet.</p>
                                     </div>
                                 )}
                             </div>
@@ -145,7 +143,7 @@ const DashboardCustomer = async () => {
 
                 {/* Quick Actions Section */}
                 <div className="mt-8 bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-gray-700">
-                    <div className="px-6 py-4 bg-gradient-to-r from-indigo-800 to-purple-700">
+                <div className="px-6 py-4 bg-gray-700">
                         <h2 className="text-xl font-semibold text-white">Quick Actions</h2>
                     </div>
                     <div className="p-6">
@@ -155,7 +153,7 @@ const DashboardCustomer = async () => {
                                     key={index}
                                     className="flex flex-col items-center justify-center bg-gray-700 hover:bg-gray-650 p-4 rounded-lg transition-colors"
                                 >
-                                    <div className="w-12 h-12 bg-indigo-800 rounded-full flex items-center justify-center mb-3">
+                                    <div className="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center mb-3">
                                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                                         </svg>

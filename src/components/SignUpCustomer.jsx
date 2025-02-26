@@ -1,3 +1,246 @@
+// 'use client'
+
+// import { useRouter } from "next/navigation";
+// import { useState } from "react";
+
+// const SignUpCustomer = () => {
+//     const router = useRouter();
+//     const [error, setError] = useState("");
+//     const [isSubmitting, setIsSubmitting] = useState(false);
+//     const [focusedField, setFocusedField] = useState(null);
+
+//     async function handleSubmit(event) {
+//         event.preventDefault();
+//         setIsSubmitting(true);
+//         setError("");
+        
+//         try {
+//             const formData = new FormData(event.currentTarget);
+
+//             const username = formData.get('username');
+//             const email = formData.get('email');
+//             const phone = formData.get('phone');
+//             const password = formData.get('password');
+//             const street = formData.get('street');
+//             const city = formData.get('city');
+//             const state = formData.get('state');
+
+//             const response = await fetch('/api/register', {
+//                 method: 'POST',
+//                 headers: {
+//                     'content-type': 'application/json',
+//                 },
+//                 body: JSON.stringify({
+//                     username, 
+//                     email, 
+//                     phone, 
+//                     password, 
+//                     street, 
+//                     city, 
+//                     state
+//                 }),
+//             });
+
+//             if(response.status !== 201){
+//                 setError("Registration failed. Please try again.");
+//             }
+//             else{
+//                 router.push('/signin');       
+//             }
+//         } catch (error) {
+//             setError("User already exists");
+//         } finally {
+//             setIsSubmitting(false);
+//         }
+//     };
+
+//     const handleFocus = (fieldName) => {
+//         setFocusedField(fieldName);
+//     };
+
+//     const handleBlur = () => {
+//         setFocusedField(null);
+//     };
+
+//     return (
+//         <div className="flex justify-center items-center min-h-screen bg-gray-800 pt-7 pb-7">
+//             <div className="bg-gray-700 p-8 rounded-lg shadow-lg w-full max-w-lg text-center transform transition-all duration-300 hover:shadow-xl">
+//                 <h1 className="text-2xl font-bold mb-6 text-gray-200">Create Your Account</h1>
+                
+//                 {error && (
+//                     <div className="mb-6 p-3 bg-red-900/30 border border-red-500 text-red-400 rounded-md text-sm font-medium animate-pulse">
+//                         {error}
+//                     </div>
+//                 )}
+                
+//                 <form id="signupForm" onSubmit={handleSubmit} className="space-y-6">
+//                     <div className="bg-gray-750 p-5 rounded-md mb-6">
+//                         <h2 className="text-xl font-semibold mb-4 text-gray-300 flex items-center">
+//                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+//                             </svg>
+//                             Customer Information
+//                         </h2>
+                        
+//                         <div className="space-y-4">
+//                             <div className="relative text-left">
+//                                 <label htmlFor="username" className={`text-sm font-medium ${focusedField === 'username' ? 'text-gray-200' : 'text-gray-400'} transition-colors duration-200`}>
+//                                     Username
+//                                 </label>
+//                                 <input 
+//                                     type="text" 
+//                                     id="username" 
+//                                     name="username" 
+//                                     placeholder="Enter Username" 
+//                                     required 
+//                                     className={`mt-1 w-full px-4 py-3 border ${focusedField === 'username' ? 'border-gray-400' : 'border-gray-500'} text-gray-200 bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200`} 
+//                                     onFocus={() => handleFocus('username')}
+//                                     onBlur={handleBlur}
+//                                 />
+//                             </div>
+                            
+//                             <div className="relative text-left">
+//                                 <label htmlFor="email" className={`text-sm font-medium ${focusedField === 'email' ? 'text-gray-200' : 'text-gray-400'} transition-colors duration-200`}>
+//                                     Email
+//                                 </label>
+//                                 <input 
+//                                     type="email" 
+//                                     id="email" 
+//                                     name="email" 
+//                                     placeholder="Enter Email" 
+//                                     required 
+//                                     className={`mt-1 w-full px-4 py-3 border ${focusedField === 'email' ? 'border-gray-400' : 'border-gray-500'} text-gray-200 bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200`} 
+//                                     onFocus={() => handleFocus('email')}
+//                                     onBlur={handleBlur}
+//                                 />
+//                             </div>
+                            
+//                             <div className="relative text-left">
+//                                 <label htmlFor="phone" className={`text-sm font-medium ${focusedField === 'phone' ? 'text-gray-200' : 'text-gray-400'} transition-colors duration-200`}>
+//                                     Phone Number
+//                                 </label>
+//                                 <input 
+//                                     type="tel" 
+//                                     id="phone" 
+//                                     name="phone" 
+//                                     placeholder="Enter Phone-Number" 
+//                                     required 
+//                                     className={`mt-1 w-full px-4 py-3 border ${focusedField === 'phone' ? 'border-gray-400' : 'border-gray-500'} text-gray-200 bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200`} 
+//                                     onFocus={() => handleFocus('phone')}
+//                                     onBlur={handleBlur}
+//                                 />
+//                             </div>
+                            
+//                             <div className="relative text-left">
+//                                 <label htmlFor="password" className={`text-sm font-medium ${focusedField === 'password' ? 'text-gray-200' : 'text-gray-400'} transition-colors duration-200`}>
+//                                     Password
+//                                 </label>
+//                                 <input 
+//                                     type="password" 
+//                                     id="password" 
+//                                     name="password" 
+//                                     placeholder="Enter Password" 
+//                                     required 
+//                                     className={`mt-1 w-full px-4 py-3 border ${focusedField === 'password' ? 'border-gray-400' : 'border-gray-500'} text-gray-200 bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200`} 
+//                                     onFocus={() => handleFocus('password')}
+//                                     onBlur={handleBlur}
+//                                 />
+//                             </div>
+//                         </div>
+//                     </div>
+                    
+//                     <div className="bg-gray-750 p-5 rounded-md">
+//                         <h2 className="text-xl font-semibold mb-4 text-gray-300 flex items-center">
+//                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+//                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+//                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+//                             </svg>
+//                             Address
+//                         </h2>
+                        
+//                         <div className="space-y-4">
+//                             <div className="relative text-left">
+//                                 <label htmlFor="street" className={`text-sm font-medium ${focusedField === 'street' ? 'text-gray-200' : 'text-gray-400'} transition-colors duration-200`}>
+//                                     Street Address
+//                                 </label>
+//                                 <input 
+//                                     type="text" 
+//                                     id="street" 
+//                                     name="street" 
+//                                     placeholder="Enter Street Address" 
+//                                     required 
+//                                     className={`mt-1 w-full px-4 py-3 border ${focusedField === 'street' ? 'border-gray-400' : 'border-gray-500'} text-gray-200 bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200`} 
+//                                     onFocus={() => handleFocus('street')}
+//                                     onBlur={handleBlur}
+//                                 />
+//                             </div>
+                            
+//                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+//                                 <div className="relative text-left">
+//                                     <label htmlFor="city" className={`text-sm font-medium ${focusedField === 'city' ? 'text-gray-200' : 'text-gray-400'} transition-colors duration-200`}>
+//                                         City
+//                                     </label>
+//                                     <input 
+//                                         type="text" 
+//                                         id="city" 
+//                                         name="city" 
+//                                         placeholder="Enter City" 
+//                                         required 
+//                                         className={`mt-1 w-full px-4 py-3 border ${focusedField === 'city' ? 'border-gray-400' : 'border-gray-500'} text-gray-200 bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200`} 
+//                                         onFocus={() => handleFocus('city')}
+//                                         onBlur={handleBlur}
+//                                     />
+//                                 </div>
+                                
+//                                 <div className="relative text-left">
+//                                     <label htmlFor="state" className={`text-sm font-medium ${focusedField === 'state' ? 'text-gray-200' : 'text-gray-400'} transition-colors duration-200`}>
+//                                         State
+//                                     </label>
+//                                     <input 
+//                                         type="text" 
+//                                         id="state" 
+//                                         name="state" 
+//                                         placeholder="Enter State" 
+//                                         required 
+//                                         className={`mt-1 w-full px-4 py-3 border ${focusedField === 'state' ? 'border-gray-400' : 'border-gray-500'} text-gray-200 bg-gray-700 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 transition-all duration-200`} 
+//                                         onFocus={() => handleFocus('state')}
+//                                         onBlur={handleBlur}
+//                                     />
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     </div>
+                    
+//                     <button 
+//                         type="submit" 
+//                         className={`mt-8 w-full py-3 px-4 rounded-md bg-gray-500 text-gray-200 font-medium text-lg transition-all duration-300 transform hover:bg-gray-600 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-gray-400 ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+//                         disabled={isSubmitting}
+//                     >
+//                         {isSubmitting ? (
+//                             <span className="flex items-center justify-center">
+//                                 <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+//                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+//                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+//                                 </svg>
+//                                 Creating Account...
+//                             </span>
+//                         ) : 'Sign Up'}
+//                     </button>
+                    
+//                     <div className="mt-6 text-sm text-gray-400">
+//                         Already have an account?{' '}
+//                         <a href="/signin" className="text-gray-300 hover:text-white transition-colors duration-200">
+//                             Sign in
+//                         </a>
+//                     </div>
+//                 </form>
+//             </div>
+//         </div>
+//     );
+// }
+
+// export default SignUpCustomer;
+
 'use client'
 
 import { useRouter } from "next/navigation";
